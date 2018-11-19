@@ -29,6 +29,7 @@ def simulate_game(holes, seeds, steps)->(str, str):
     game = Kalha(6, 6)
     prev = game.bank[game.player]
     for step in steps:
+        print(game.status())
         if '+' in str(step):
             print(step, "==", game.bank[1-game.player], "-", prev)
             assert int(step[1:]) == game.bank[1-game.player]-prev

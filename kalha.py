@@ -33,19 +33,6 @@ class Kalha:
     def play(self, hole):
         if self.winnerr != 10:
             return "Game Over"
-        if not any(self.now[1-self.player]):
-            for i in range(self.holes):
-                self.bank[1-self.player] += self.now[self.player][i]
-                self.now[self.player][i] = 0
-            if self.bank[self.player] > self.bank[1 - self.player]:
-                self.winnerr = self.player
-                return "Player {} wins".format(self.player + 1)
-            elif self.bank[1 - self.player] > self.bank[self.player]:
-                self.winnerr = (1 - self.player) + 1
-                return "Player {} wins".format((1 - self.player) + 1)
-            else:
-                self.winnerr = None
-                return "Tie"
 
         if hole > self.holes:
             raise IndexError
@@ -76,6 +63,20 @@ class Kalha:
                 self.now[play_er][hole - 1] = 0
                 self.bank[play_er] += self.now[1 - play_er][(self.holes - hole)]
                 self.now[1 - play_er][(self.holes - hole)] = 0
+        if not any(self.now[1-self.player]):
+            for i in range(self.holes):
+                self.bank[self.player] += self.now[self.player][i]
+                self.now[self.player][i] = 0
+            self.player = 1-self.player
+            if self.bank[self.player] > self.bank[1 - self.player]:
+                self.winnerr = self.player
+                return "Player {} wins.".format(self.player + 1)
+            elif self.bank[1 - self.player] > self.bank[self.player]:
+                self.winnerr = (1 - self.player) + 1
+                return "Player {} wins.".format((1 - self.player) + 1)
+            else:
+                self.winnerr = None
+                return "Tie"
         if hole != 0 or play_er != self.player:
             self.player = 1 - self.player
         return "Player 2 plays next" if self.player else "Player 1 plays next"
