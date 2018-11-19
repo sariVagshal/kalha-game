@@ -3,11 +3,11 @@ class Kalha:
         self.player = 0
         self.bank = [0, 0]
         self.holes = holes
-        self.now = {0: {}, 1: {}}
+        self.now = [[],[]]
         for j in range(2):
             for i in range(holes):
-                self.now[j][i] = seeds
-        self.winnerr = False
+                self.now[j].append(seeds)
+        self.winnerr = 10
 
     def __repr__(self):
         show = ' '
@@ -31,8 +31,22 @@ class Kalha:
 
 
     def play(self, hole):
-        if self.winnerr:
+        if self.winnerr != 10:
             return "Game Over"
+        if not any(self.now[1-self.player]):
+            for i in range(self.holes):
+                self.bank[1-self.player] += self.now[self.player][i]
+                self.now[self.player][i] = 0
+            if self.bank[self.player] > self.bank[1 - self.player]:
+                self.winnerr = self.player
+                return "Player {} wins".format(self.player + 1)
+            elif self.bank[1 - self.player] > self.bank[self.player]:
+                self.winnerr = (1 - self.player) + 1
+                return "Player {} wins".format((1 - self.player) + 1)
+            else:
+                self.winnerr = None
+                return "Tie"
+
         if hole > self.holes:
             raise IndexError
         # hole = hole - 1
@@ -56,7 +70,6 @@ class Kalha:
                     play_er = 1 - play_er
                 flag = 1
             stones = stones - 1
-        # hole = hole-1 if hole-1>=0 else self.holes-1
         if play_er == self.player:
             if hole != 0 and self.now[play_er][hole - 1] == 1:
                 self.bank[play_er] += 1
@@ -65,15 +78,6 @@ class Kalha:
                 self.now[1 - play_er][(self.holes - hole)] = 0
         if hole != 0 or play_er != self.player:
             self.player = 1 - self.player
-        if not any(self.now[self.player]):
-            for i in range(self.holes):
-                self.bank[self.player] += self.now[1 - self.player][i]
-        if self.bank[self.player] >= 37:
-            self.winnerr = True
-            return "Player {} wins".format(self.player + 1)
-        if self.bank[1 - self.player] >= 37:
-            self.winnerr = True
-            return "Player {} wins".format(self.player)
         return "Player 2 plays next" if self.player else "Player 1 plays next"
 
 
