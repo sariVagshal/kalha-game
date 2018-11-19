@@ -30,7 +30,9 @@ def simulate_game(holes, seeds, steps)->(str, str):
     prev = game.bank[game.player]
     for step in steps:
         print(game.status())
-        if '+' in str(step):
+        if step is steps[-1]:
+            yield (game.play(step), game.status())
+        elif '+' in str(step):
             print(step, "==", game.bank[1-game.player], "-", prev)
             assert int(step[1:]) == game.bank[1-game.player]-prev
             prev = game.bank[game.player]
