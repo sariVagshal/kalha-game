@@ -3,10 +3,11 @@ class Kalha:
         self.player = 0
         self.bank = [0, 0]
         self.holes = holes
-        self.now = [[],[]]
-        for j in range(2):
-            for i in range(holes):
-                self.now[j].append(seeds)
+        self.now = [[seeds for i in range(holes)],[seeds for i in range(holes)]]
+        # for j in range(2):
+        #     for i in range(holes):
+        #         self.now[j].append(seeds)
+
         self.winnerr = 10
 
     def __repr__(self):
@@ -58,7 +59,7 @@ class Kalha:
             stones = stones - 1
         if not any(self.now[self.player]):
             self.player = 1-self.player
-            return self.end_function(1-self.player)#"Player 2 plays next" if self.player else "Player 1 plays next"
+            return self.help_function(1-self.player)#"Player 2 plays next" if self.player else "Player 1 plays next"
 
         helper = self.help_function(1-self.player)
         if not helper is 10:
@@ -90,7 +91,7 @@ class Kalha:
 
     def help_function(self, player):
         if not any(self.now[player]):  # 1-self.player]):
-            #self.player = 1 - self.player
+            self.player = 1 - self.player
             for i in range(self.holes):
                 self.bank[1 - player] += self.now[1 - player][i]
                 self.now[1-player][i] = 0
@@ -107,19 +108,3 @@ class Kalha:
         else:
             return 10
 
-    def end_function(self, player):
-        if any(self.now[1-player]):
-            self.player = 1-self.player
-            for i in range(self.holes):
-                self.bank[1 - player] += self.now[1 - player][i]
-                self.now[1-player][i] = 0
-            self.player = 1 - self.player
-            if self.bank[self.player] > self.bank[1 - self.player]:
-                self.winnerr = self.player
-                return "Player {} wins.".format(self.player + 1)
-            elif self.bank[1 - self.player] > self.bank[self.player]:
-                self.winnerr = (1 - self.player) + 1
-                return "Player {} wins.".format((1 - self.player) + 1)
-            else:
-                self.winnerr = None
-                return "Tie"
