@@ -3,7 +3,7 @@ class Kalha:
         self.player = 0
         self.bank = [0, 0]
         self.holes = holes
-        self.now = [[seeds for i in range(holes)],[seeds for i in range(holes)]]
+        self.now = [[seeds for i in range(holes)] for i in range(2)]
         # for j in range(2):
         #     for i in range(holes):
         #         self.now[j].append(seeds)
