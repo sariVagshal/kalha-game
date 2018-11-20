@@ -19,11 +19,11 @@ class Kalha:
     def __str__(self):
         show = '    p1:     '
         for i in range(self.holes):
-            show += str(self.now[0][self.holes-1-i])
+            show += f"{str(self.now[0][self.holes-1-i]):>3}"
         show += '\n          '
-        show += str(self.bank[0]) + " " * (self.holes+2) + str(self.bank[1]) + '\n' + '    p2:     '
+        show += str(self.bank[0]) + "   " * (self.holes+2) + str(self.bank[1]) + '\n' + '    p2:     '
         for i in reversed(range(self.holes)):
-            show += str(self.now[1][self.holes-1-i])
+            show += f"{str(self.now[1][self.holes-1-i]):>3}"
         return show
 
 
