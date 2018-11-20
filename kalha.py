@@ -4,10 +4,6 @@ class Kalha:
         self.bank = [0, 0]
         self.holes = holes
         self.now = [[seeds for i in range(holes)] for i in range(2)]
-        # for j in range(2):
-        #     for i in range(holes):
-        #         self.now[j].append(seeds)
-
         self.winnerr = 10
 
     def __repr__(self):
@@ -21,18 +17,18 @@ class Kalha:
         return show
 
     def __str__(self):
-        show = 'Player1: '
+        show = '    p1:     '
         for i in range(self.holes):
             show += str(self.now[0][self.holes-1-i])
-        show += '\n        '
-        show += str(self.bank[0]) + " " * self.holes + str(self.bank[1]) + '\n' + 'Player2: '
+        show += '\n          '
+        show += str(self.bank[0]) + " " * (self.holes+2) + str(self.bank[1]) + '\n' + '    p2:     '
         for i in range(self.holes):
             show += str(self.now[1][self.holes-1-i])
         return show
 
 
     def play(self, hole):
-        if self.winnerr != 10:
+        if self.game_over():
             return "Player {} wins.".format(self.winnerr+1)
         if hole > self.holes or hole < 1:
             raise IndexError
@@ -90,7 +86,7 @@ class Kalha:
 
 
     def help_function(self, player):
-        if not any(self.now[player]):  # 1-self.player]):
+        if not any(self.now[player]):
             self.player = 1 - self.player
             for i in range(self.holes):
                 self.bank[1 - player] += self.now[1 - player][i]
@@ -107,4 +103,7 @@ class Kalha:
                 return "Tie"
         else:
             return 10
+
+    def game_over(self):
+        return self.winnerr != 10
 

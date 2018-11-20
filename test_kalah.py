@@ -1,8 +1,6 @@
 import unittest
-#from kalha_tests.kalha import Kalha
 from kalha import Kalha
-#from ..kalha_tests import kalha as Kalha
-#import .kalha as Kalha
+
 
 class KalhaTestCase(unittest.TestCase):
     def setUp(self):
