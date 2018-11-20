@@ -12,7 +12,7 @@ class Kalha:
             show += str(self.now[0][self.holes-1-i])
         show += '\n'
         show += str(self.bank[0]) + " " * self.holes + str(self.bank[1]) + '\n' + ' '
-        for i in range(self.holes):
+        for i in reversed(range(self.holes)):
             show += str(self.now[1][self.holes-1-i])
         return show
 
@@ -22,7 +22,7 @@ class Kalha:
             show += str(self.now[0][self.holes-1-i])
         show += '\n          '
         show += str(self.bank[0]) + " " * (self.holes+2) + str(self.bank[1]) + '\n' + '    p2:     '
-        for i in range(self.holes):
+        for i in reversed(range(self.holes)):
             show += str(self.now[1][self.holes-1-i])
         return show
 
@@ -32,7 +32,6 @@ class Kalha:
             return "Player {} wins.".format(self.winnerr+1)
         if hole > self.holes or hole < 1:
             raise IndexError
-        # hole = hole - 1
         if self.now[self.player][hole - 1] == 0:
             raise ValueError
         stones = self.now[self.player][hole - 1]
